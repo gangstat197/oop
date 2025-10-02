@@ -12,7 +12,17 @@ public class StringCode {
 	 * @return max run length
 	 */
 	public static int maxRun(String str) {
-		return 0; // YOUR CODE HERE
+        int max = 1;
+        int count = 1;
+        for (int i = 1; i < str.length(); i++) {
+            if (str.charAt(i) == str.charAt(i-1)) {
+                count++;
+                max = Math.max(max, count);
+            } else {
+                count = 0;
+            }
+        }
+        return max; // YOUR CODE HERE
 	}
 
 	
@@ -24,7 +34,25 @@ public class StringCode {
 	 * @return blown up string
 	 */
 	public static String blowup(String str) {
-		return null; // YOUR CODE HERE
+        char[] arr = str.toCharArray();
+
+        StringBuilder result = new StringBuilder();
+        int count = 0;
+        for (char c : arr) {
+            if (c >= '0' && c <= '9') {
+                count = c - '0';
+                continue;
+            }
+
+            if (count > 0) {
+                for (int j = 0; j < count + 1; j++) {
+                    result.append(c);
+                }
+                count = 0;
+            }
+        }
+
+        return result.toString();
 	}
 	
 	/**
@@ -34,6 +62,21 @@ public class StringCode {
 	 * Compute this in linear time using a HashSet. Len will be 1 or more.
 	 */
 	public static boolean stringIntersect(String a, String b, int len) {
-		return false; // YOUR CODE HERE
+        Set<String> set = new HashSet<>();
+
+        for (int i = 0; i <= a.length() - len; i++) {
+            String sub =  a.substring(i, i + len);
+
+            set.add(sub);
+        }
+
+        for (int i = 0; i <= b.length() - len; i++) {
+            String sub =  b.substring(i, i + len);
+
+            if (set.contains(sub)) {
+                return true;
+            }
+        }
+		return false;
 	}
 }
